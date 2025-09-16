@@ -13,6 +13,12 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(params_contact)
+    @contact.family = current_user.family
+    if @contact.save
+      redirect_to root_path
+    else
+      render :new, status: :unprocessable_content
+    end
   end
 
   private
