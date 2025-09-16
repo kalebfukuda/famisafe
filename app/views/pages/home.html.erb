@@ -1,20 +1,9 @@
 <div class="p-4">
   <h1>All safe?</h1>
-  <div id="map" style="height: 500px; width: 100%;"></div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Criar mapa centralizado em Tóquio
-      var map = L.map('map').setView([35.6895, 139.6917], 12);
-
-      // Adicionar camada do OpenStreetMap
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      // Adicionar marcador
-      L.marker([35.6895, 139.6917]).addTo(map)
-        .bindPopup("Estamos em Tóquio!")
-        .openPopup();
-    });
-  </script>
+  <div id="map" class="map-responsive" style="width: 100%;"></div>
+  <div class="mt-2 ">
+    <% @contacts.each do |contact| %>
+      <%= render "shared/contactCard", contact: contact %>
+    <% end %>
+  </div>
 </div>
