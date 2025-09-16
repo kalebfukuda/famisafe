@@ -1,0 +1,12 @@
+<div>
+  <h1 class="text-center p-3">Create Contact</h1>
+  <div class="p-3">
+    <%= simple_form_for @contact do |f| %>
+      <%= f.input :name, class: "form-control" %>
+      <%= f.input :telephone, class: "form-control" %>
+      <%= f.input :email, class: "form-control" %>
+      <%= f.input :relationship, class: "form-control" %>
+      <%= f.submit class: "btn btn-primary w-100 text-white" %>
+    <% end %>
+  </div>
+</div>

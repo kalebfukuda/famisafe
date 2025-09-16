@@ -10,9 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_16_045621) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_16_053445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "postal_code"
+    t.string "prefecture"
+    t.string "city"
+    t.string "district"
+    t.string "block"
+    t.string "building_name"
+    t.string "number"
+    t.bigint "contacts_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contacts_id"], name: "index_addresses_on_contacts_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "telephone"
+    t.string "email"
+    t.string "relationship"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contacts_lists", force: :cascade do |t|
+    t.bigint "users_id", null: false
+    t.bigint "contacts_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contacts_id"], name: "index_contacts_lists_on_contacts_id"
+    t.index ["users_id"], name: "index_contacts_lists_on_users_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_045621) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "addresses", "contacts", column: "contacts_id"
+  add_foreign_key "contacts_lists", "contacts", column: "contacts_id"
+  add_foreign_key "contacts_lists", "users", column: "users_id"
 end
