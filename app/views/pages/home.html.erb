@@ -1,3 +1,9 @@
 <div class="p-4">
   <h1>All safe?</h1>
+  <div id="map" class="map-responsive" style="width: 100%;"></div>
+  <div class="mt-2 ">
+    <% @contacts.each do |contact| %>
+      <%= render "shared/contactCard", contact: contact %>
+    <% end %>
+  </div>
 </div>

@@ -38,12 +38,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_053445) do
   end
 
   create_table "contacts_lists", force: :cascade do |t|
-    t.bigint "users_id", null: false
-    t.bigint "contacts_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "contact_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["contacts_id"], name: "index_contacts_lists_on_contacts_id"
-    t.index ["users_id"], name: "index_contacts_lists_on_users_id"
+    t.index ["contact_id"], name: "index_contacts_lists_on_contact_id"
+    t.index ["user_id"], name: "index_contacts_lists_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -59,6 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_053445) do
   end
 
   add_foreign_key "addresses", "contacts", column: "contacts_id"
-  add_foreign_key "contacts_lists", "contacts", column: "contacts_id"
-  add_foreign_key "contacts_lists", "users", column: "users_id"
+  add_foreign_key "contacts_lists", "contacts"
+  add_foreign_key "contacts_lists", "users"
 end
