@@ -3,7 +3,9 @@
   <div id="map" class="map-responsive" style="width: 100%;"></div>
   <div class="mt-2 ">
     <% @contacts.each do |contact| %>
-      <%= render "shared/contactCard", contact: contact %>
+      <div class="my-2">
+        <%= render "shared/contactCard", contact: contact %>
+      </div>
     <% end %>
   </div>
 </div>

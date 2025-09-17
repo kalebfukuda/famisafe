@@ -4,21 +4,23 @@ Contact.destroy_all
 User.destroy_all
 
 puts "Creating Contact.... \n"
+family = Family.create!(
+  name: "Fukuda"
+)
+
 user = User.create!(
-  email: "admin@admin.com",
+  email: "kaleb@gmail.com",
   password: "123456",
-  password_confirmation: "123456"
+  password_confirmation: "123456",
+  family: family
 )
 contact = Contact.create!(
   name: "Father Father",
   telephone: "+81 000-0000-0000",
   email: "Father@Father.com",
-  relationship: "Father"
+  relationship: "Father",
+  family: family
 )
 
-ContactsList.create!(
-  user: user,
-  contact: contact
-)
 
 puts "Contact created!"

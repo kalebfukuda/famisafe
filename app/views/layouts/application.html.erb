@@ -10,7 +10,10 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body><%= render "shared/bottomMenu" %>
+  <body>
+    <% unless devise_controller?  %>
+      <%= render "shared/bottomMenu" %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
