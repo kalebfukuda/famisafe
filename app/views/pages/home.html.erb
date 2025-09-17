@@ -3,7 +3,8 @@
   <div id="map" class="map-responsive" style="width: 100%;" data-controller="map"
     data-action="location:changed->map#updateLocation"
     data-map-latitude-value="<%= current_user.latitude %>"
-    data-map-longitude-value="<%= current_user.longitude %>">
+    data-map-longitude-value="<%= current_user.longitude %>"
+    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}.png") } }).to_json %>'>
   </div>
   <div class="mt-2 ">
     <% @contacts.each do |contact| %>
