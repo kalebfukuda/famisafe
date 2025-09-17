@@ -7,7 +7,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href="/contacts/new">
+        <a class="nav-link text-center" href=<%= current_user.family.nil? ? "/families/new" : "/contacts/new" %>>
           <i class="fa-solid fa-user-plus"></i>
         </a>
       </li>
