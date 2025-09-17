@@ -14,7 +14,7 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(params_contact)
-
+    @contact.family = current_user.family
     if @contact.save
       redirect_to root_path
     else
@@ -25,6 +25,6 @@ class ContactsController < ApplicationController
   private
 
   def params_contact
-    params.require(:contact).permit(:name, :telephone, :email, :relationship)
+    params.require(:contact).permit(:name, :telephone, :email, :relationship, :latitude, :longitude)
   end
 end
