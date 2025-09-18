@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_18_043308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "place_types", force: :cascade do |t|
+    t.string "description"
+    t.string "avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string "description"
+    t.bigint "family_id", null: false
+    t.bigint "address_id", null: false
+    t.bigint "place_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_places_on_address_id"
+    t.index ["family_id"], name: "index_places_on_family_id"
+    t.index ["place_type_id"], name: "index_places_on_place_type_id"
   end
 
   create_table "users", force: :cascade do |t|
