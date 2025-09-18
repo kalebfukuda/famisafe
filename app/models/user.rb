@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  belongs_to :contact, optional: true
   belongs_to :family, optional: true
   has_many :contacts, through: :family
 end

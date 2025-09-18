@@ -1,4 +1,4 @@
 class Family < ApplicationRecord
-  has_many :users
   has_many :contacts
+  has_many :users
 end
