@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_19_085045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,10 +22,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
     t.string "block"
     t.string "building_name"
     t.string "number"
-    t.bigint "contacts_id", null: false
+    t.string "description"
+    t.bigint "type_place_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["contacts_id"], name: "index_addresses_on_contacts_id"
+    t.float "latitude"
+    t.float "longitude"
+    t.index ["type_place_id"], name: "index_addresses_on_type_place_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -33,17 +36,33 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
     t.string "telephone"
     t.string "email"
     t.string "relationship"
-    t.bigint "family_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.float "latitude"
     t.float "longitude"
     t.string "avatar"
+    t.bigint "family_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["family_id"], name: "index_contacts_on_family_id"
   end
 
   create_table "families", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "list_addresses", force: :cascade do |t|
+    t.bigint "address_id", null: false
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_list_addresses_on_address_id"
+    t.index ["contact_id"], name: "index_list_addresses_on_contact_id"
+  end
+
+  create_table "type_places", force: :cascade do |t|
+    t.string "description"
+    t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,15 +75,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_17_073519) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "family_id"
-    t.float "latitude"
-    t.float "longitude"
+    t.bigint "contact_id"
     t.string "avatar"
+    t.index ["contact_id"], name: "index_users_on_contact_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["family_id"], name: "index_users_on_family_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "addresses", "contacts", column: "contacts_id"
-  add_foreign_key "users", "families"
+  add_foreign_key "users", "contacts"
 end

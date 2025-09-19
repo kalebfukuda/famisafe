@@ -9,12 +9,12 @@ class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
-    @family = Family.new if current_user.family.nil?
+    @family = Family.new if current_user.contact.family.nil?
   end
 
   def create
     @contact = Contact.new(params_contact)
-    @contact.family = current_user.family
+    @contact.family = current_user.contact.family
     if @contact.save
       redirect_to root_path
     else

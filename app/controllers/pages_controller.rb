@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
- before_action :authenticate_user!, only: [:home]
+  before_action :authenticate_user!, only: [:home]
 
   def home
-    @contacts = current_user.contacts
+    @contacts = current_user.contact.family.contacts
   end
 end

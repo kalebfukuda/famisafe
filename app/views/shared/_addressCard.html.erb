@@ -1,0 +1,16 @@
+<div class="container rounded-4 bg-primary h-30 mt-2">
+  <div class="row p-3">
+    <div class="col-12 col-md-12 mb-2">
+      <%= image_tag asset_path("icons/#{address.type_place.avatar}"), style: "height:1.5rem" %>
+      <span><strong><%= address.description %></strong></span>
+    </div>
+    <div class="col-12 col-md-12 mb-1" >
+      <%= "#{address.postal_code} - #{address.prefecture}, #{address.city}, #{address.district} #{address.block} - #{address.building_name}, #{address.number}" %>
+    </div>
+    <div class="col-12 col-md-12">
+      <% address.contacts.each do |contact| %>
+        <%= image_tag asset_path("icons/#{contact.avatar}"), style: "height:1.5rem" %>
+      <% end %>
+    </div>
+  </div>
+</div>

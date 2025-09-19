@@ -7,12 +7,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href=<%= current_user.family.nil? ? "/families/new" : "/contacts/new" %>>
+        <a class="nav-link text-center" href=<%= current_user.contact.family.nil? ? "/families/new" : "/contacts/new" %>>
           <i class="fa-solid fa-user-plus"></i>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href="#">
+        <a class="nav-link text-center" href="/addresses">
           <i class="fa-solid fa-building-shield"></i>
         </a>
       </li>
@@ -27,7 +27,7 @@
         <%= link_to destroy_user_session_path,
             data: { turbo_method: :delete },
             class: "nav-link text-center" do %>
-        <i class="fa-solid fa-right-from-bracket"></i>
+          <i class="fa-solid fa-right-from-bracket"></i>
       <% end %>
     </li>
   </ul>

@@ -4,6 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  belongs_to :family, optional: true
-  has_many :contacts, through: :family
+  belongs_to :contact, optional: true
+
+  # Todos os contatos da família do usuário
+  has_many :contacts, through: :contact, source: :family_contacts
+
+  # Todos os endereços dos contatos da família
+  has_many :addresses, through: :contacts
 end
