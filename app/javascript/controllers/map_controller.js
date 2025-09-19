@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="map"
 export default class extends Controller {
+  static targets= ["createaddress", "map"]
   static values = {
     latitude: Number,
     longitude: Number,
@@ -23,7 +24,7 @@ export default class extends Controller {
     const lat = this.latitudeValue || 0;
     const lng = this.longitudeValue || 0;
 
-    this.map = L.map(this.element).setView([lat, lng], 12);
+    this.map = L.map(this.mapTarget).setView([lat, lng], 12);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors",
@@ -32,7 +33,11 @@ export default class extends Controller {
 
     //Add touch event to map
     this.map.on('click', (e) => {
-        this.updateMarker(e.latlng.lat, e.latlng.lng, "custom");
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        this.updateMarker(lat, lng, "custom");
+        this.getOSMData(lat, lng);
     });
 
     //Shows all locations for all places and contacts
@@ -118,5 +123,29 @@ export default class extends Controller {
     });
 
     return allMarkers
+  }
+
+  getOSMData(lat, lng) {
+    fetch(`/addresses/reverse_geocode?lat=${lat}&lng=${lng}`)
+    .then((res) => res.json())
+    .then((data) => {
+      this.createaddressTarget.classList.remove("d-none");
+      console.log(data);
+
+      //Add data from click to simple_form
+      if(data) {
+        const form = this.createaddressTarget.querySelector("form");
+        form.querySelector("[name='address[postal_code]']").value = data.address.postcode;
+        form.querySelector("[name='address[prefecture]']").value = data.address.suburb;
+        form.querySelector("[name='address[city]']").value = data.address.city;
+        form.querySelector("[name='address[block]']").value = data.address.neighbourhood;
+        form.querySelector("[name='address[latitude]']").value = lat;
+        form.querySelector("[name='address[longitude]']").value = lng;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("An error occurred while updating location.");
+    });
   }
 }

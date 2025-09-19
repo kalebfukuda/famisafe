@@ -1,14 +1,33 @@
 <div>
   <h1 class="text-center p-3">Family Addresses</h1>
-  <div>
-    <div id="map" class="map-responsive" style="width: 100%;" data-controller="map"
+  <div data-controller="map"
+    data-map-viewtype-value="only-address"
+    data-map-latitude-value="<%= current_user.contact.latitude %>"
+    data-map-longitude-value="<%= current_user.contact.longitude %>"
+    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
+    data-map-addresses-value='<%= (@addresses.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
+    data-map-userid-value='<%= current_user.contact.id %>'>
+    <div id="map" class="map-responsive" style="width: 100%;" data-map-target="map"
     data-action="location:changed->map#updateLocation"
-      data-map-viewtype-value="only-address"
-      data-map-latitude-value="<%= current_user.contact.latitude %>"
-      data-map-longitude-value="<%= current_user.contact.longitude %>"
-      data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
-      data-map-addresses-value='<%= (@addresses.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
-      data-map-userid-value='<%= current_user.contact.id %>'>
+      >
+    </div>
+    <div data-map-target="createaddress" class="d-none p-3">
+      <%= simple_form_for @address do |f| %>
+        <%= f.input :description, class: "form-control" %>
+        <%= f.input :building_name, class: "form-control" %>
+        <%= f.input :type_place_id,
+          collection: TypePlace.all.collect { |tp| [tp.description, tp.id] },
+          prompt: "Select a type",
+          label: "Place type",
+          input_html: { class: "form-select" } %>
+        <%= f.input :postal_code, as: :hidden %>
+        <%= f.input :prefecture, as: :hidden %>
+        <%= f.input :city, as: :hidden %>
+        <%= f.input :block, as: :hidden %>
+        <%= f.input :latitude, as: :hidden %>
+        <%= f.input :longitude, as: :hidden %>
+        <%= f.submit class: "btn btn-primary w-100 text-white" %>
+      <% end %>
     </div>
     <div class="p-3">
       <% @addresses.each do |address|  %>
