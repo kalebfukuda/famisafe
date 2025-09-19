@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resource :user, only: [] do
     patch :update_location
   end
+  resources :addresses, only: [:new, :create, :index, :show]
   # Defines the root path route ("/")
   # root "posts#index"
 end

@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="location"
 export default class extends Controller {
-
   update(event) {
     event.preventDefault();
 
@@ -16,6 +15,7 @@ export default class extends Controller {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
+        const userId = this.userIdValue;
         // Atualiza backend
         fetch("/user/update_location", {
           method: "PATCH",
@@ -23,7 +23,7 @@ export default class extends Controller {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content,
           },
-          body: JSON.stringify({ latitude, longitude }),
+          body: JSON.stringify({ latitude, longitude}),
         })
         .then((res) => res.json())
         .then((data) => {

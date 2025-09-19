@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ListAddressTest < ActiveSupport::TestCase
+class AddressesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

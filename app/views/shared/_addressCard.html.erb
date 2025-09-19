@@ -1,0 +1,14 @@
+<div class="container rounded-4 bg-cBlack h-30 mt-2">
+  <div class="row p-3">
+    <div class="col-12 col-md-12">
+      <% address.contacts.each do |contact| %>
+        <%= contact.avatar %>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-12">
+      <span><strong><%= address.description %></strong></span>
+      <br>
+      <%= "#{address.postal_code} - #{address.prefecture}, #{address.city}, #{address.district} #{address.block} - #{address.building_name}, #{address.number}" %>
+    </div>
+  </div>
+</div>

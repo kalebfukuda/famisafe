@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :contact, optional: true
-  belongs_to :family, optional: true
-  has_many :contacts, through: :family
+
+  # Todos os contatos da família do usuário
+  has_many :contacts, through: :contact, source: :family_contacts
+
+  # Todos os endereços dos contatos da família
+  has_many :addresses, through: :contacts
 end

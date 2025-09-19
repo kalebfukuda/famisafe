@@ -1,6 +1,6 @@
-class CreateListAdresses < ActiveRecord::Migration[7.1]
+class CreateListAddresses < ActiveRecord::Migration[7.1]
   def change
-    create_table :list_adresses do |t|
+    create_table :list_addresses do |t|
       t.references :address, null: false
       t.references :contact, null: false
       t.timestamps
