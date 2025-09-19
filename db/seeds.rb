@@ -53,6 +53,22 @@ TypePlace.create!(
   avatar: "school.png"
 )
 
+
+TypePlace.create!(
+  description: "Hospital",
+  avatar: "hospital.png"
+)
+
+TypePlace.create!(
+  description: "Apartment",
+  avatar: "apartment.png"
+)
+
+TypePlace.create!(
+  description: "Shelter",
+  avatar: "shelter.png"
+)
+
 address = Address.create!(
   postal_code: "210-0410",
   prefecture: "Kanagawa",
