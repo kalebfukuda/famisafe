@@ -15,7 +15,7 @@ export default class extends Controller {
     this.initMap();
     document.addEventListener("location:changed", (event) => {
       const { latitude, longitude } = event.detail;
-      this.updateMarker(latitude, longitude);
+      this.updateMarker(latitude, longitude, this.useridValue);
     });
   }
 
@@ -29,6 +29,11 @@ export default class extends Controller {
       attribution: "&copy; OpenStreetMap contributors",
       maxZoom: 19
     }).addTo(this.map);
+
+    //Add touch event to map
+    this.map.on('click', (e) => {
+        this.updateMarker(e.latlng.lat, e.latlng.lng, "custom");
+    });
 
     //Shows all locations for all places and contacts
     if(this.viewtypeValue === "all") {
@@ -80,16 +85,24 @@ export default class extends Controller {
     setTimeout(() => this.map.invalidateSize(), 500);
   }
 
-  updateMarker(latitude, longitude) {
+  updateMarker(latitude, longitude, findMarker) {
     const newLatLng = L.latLng(latitude, longitude);
     const allMarkers = this.getAllMarkers();
-
+    let foundMarker = null;
 
     allMarkers.forEach((element) => {
-      if (element._leaflet_id === this.useridValue) {
-        element.setLatLng(newLatLng);
+      if (element._leaflet_id === findMarker) {
+        foundMarker = element;
       }
     })
+
+    // If there are no marker
+    if(foundMarker === null) {
+      foundMarker = L.marker(newLatLng).addTo(this.map);
+      foundMarker._leaflet_id = "custom";
+    } else {
+      foundMarker.setLatLng(newLatLng);
+    }
 
     this.map.setView(newLatLng, this.map.getZoom());
     this.map.invalidateSize();
