@@ -2,8 +2,8 @@
     data-map-viewtype-value="all"
     data-map-latitude-value="<%= current_user.contact.latitude %>"
     data-map-longitude-value="<%= current_user.contact.longitude %>"
-    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
-    data-map-addresses-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
+    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/avatars/#{c.avatar}") } }).to_json %>'
+    data-map-addresses-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/avatars/#{c.avatar}") } }).to_json %>'
     data-map-userid-value='<%= current_user.contact.id %>'>
   <h1>All safe?</h1>
   <div id="map" class="map-responsive" style="width: 100%;" data-map-target="map"

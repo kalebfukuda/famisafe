@@ -9,4 +9,9 @@ class Contact < ApplicationRecord
   has_many :family_contacts, through: :family, source: :contacts
 
   validates :name, presence: true
+
+  def self.avatars
+    Dir.glob(Rails.root.join("app/assets/images/icons/avatars/*.png"))
+       .map { |path| File.basename(path) }
+  end
 end

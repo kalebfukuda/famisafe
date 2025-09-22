@@ -4,8 +4,8 @@
     data-map-viewtype-value="only-address"
     data-map-latitude-value="<%= current_user.contact.latitude %>"
     data-map-longitude-value="<%= current_user.contact.longitude %>"
-    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/#{c.avatar}") } }).to_json %>'
-    data-map-addresses-value='<%= (@addresses.map { |a| { id: a.id, latitude: a.latitude, longitude: a.longitude, avatar_url: asset_path("icons/#{a.type_place.avatar}") } }).to_json %>'
+    data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: c.id, latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/avatars/#{c.avatar}") } }).to_json %>'
+    data-map-addresses-value='<%= (@addresses.map { |a| { id: a.id, latitude: a.latitude, longitude: a.longitude, avatar_url: asset_path("icons/places/#{a.type_place.avatar}") } }).to_json %>'
     data-map-userid-value='<%= current_user.contact.id %>'>
     <div id="map" class="map-responsive" style="width: 100%;" data-map-target="map"
     data-action="location:changed->map#updateLocation"

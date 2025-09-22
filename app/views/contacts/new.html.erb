@@ -6,6 +6,13 @@
       <%= f.input :telephone, class: "form-control" %>
       <%= f.input :email, class: "form-control" %>
       <%= f.input :relationship, class: "form-control" %>
+      <%= f.collection_radio_buttons :avatar, Contact.avatars, :to_s, :to_s do |b| %>
+        <div class="avatar-option">
+          <%= b.radio_button(class: "hidden") %>
+          <%= image_tag("icons/avatars/#{b.object}", class: "avatar-image") %>
+          <%= f.label :avatar, File.basename(b.object, ".*").humanize, value: b.object, class: "avatar-label" %>
+        </div>
+      <% end %>
       <%= f.submit class: "btn btn-primary w-100 text-white" %>
     <% end %>
   </div>
