@@ -16,7 +16,7 @@ export default class extends Controller {
     this.initMap();
     document.addEventListener("location:changed", (event) => {
       const { latitude, longitude } = event.detail;
-      this.updateMarker(latitude, longitude, this.useridValue);
+      this.updateMarker(latitude, longitude, `contact_${this.useridValue}`);
     });
   }
 
@@ -66,8 +66,6 @@ export default class extends Controller {
             .bindPopup(`<b>${element.name}</b><br>`).openPopup()
             .addTo(this.map);
           this.marker._leaflet_id = element.id;
-          console.log(this.marker._leaflet_id);
-
         }
       });
     }
@@ -76,17 +74,12 @@ export default class extends Controller {
 
   updateMarker(latitude, longitude, findMarker) {
     const newLatLng = L.latLng(latitude, longitude);
-    const allMarkers = this.getAllMarkers();
-    let foundMarker = null;
 
-    allMarkers.forEach((element) => {
-      if (element._leaflet_id === findMarker) {
-        foundMarker = element;
-      }
-    })
+    let foundMarker = this.searchMarker(findMarker);
+    console.log(foundMarker);
 
     // If there are no marker
-    if(foundMarker === null) {
+    if(foundMarker === undefined) {
       foundMarker = L.marker(newLatLng).addTo(this.map);
       foundMarker._leaflet_id = "custom";
     } else {
@@ -107,6 +100,13 @@ export default class extends Controller {
     });
 
     return allMarkers
+  }
+
+
+
+  searchMarker(findMarker) {
+    const allMarkers = this.getAllMarkers();
+    return allMarkers.find(marker => marker._leaflet_id === findMarker);
   }
 
   getOSMData(lat, lng) {
@@ -131,5 +131,13 @@ export default class extends Controller {
       console.error(err);
       alert("An error occurred while updating location.");
     });
+  }
+
+  centerView(event) {
+    let foundMarker = this.searchMarker(event.params.id);
+
+    if(foundMarker) {
+      this.map.setView(foundMarker._latlng, 16);
+    }
   }
 }

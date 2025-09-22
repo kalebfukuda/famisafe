@@ -1,4 +1,6 @@
-<div class="bg-danger w-100 rounded-5">
+<div class="bg-danger w-100 rounded-5"
+  data-action="click->map#centerView"
+  data-map-id-param="<%= "contact_#{contact.id}" %>">
   <div class="px-3 py-2 d-flex">
     <div class="d-flex justify-content-center align-items-center">
       <%= image_tag asset_path("icons/avatars/#{contact.avatar}"), style: "height:2rem" %>
