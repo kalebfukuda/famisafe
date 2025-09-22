@@ -58,11 +58,13 @@ export default class extends Controller {
               iconUrl: element.avatar_url,
               iconSize:     [35, 35],
               iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+              popupAnchor:  [-3, -10] // point from which the popup should open relative to the iconAnchor
             });
           }
 
-          this.marker = L.marker([contactLat, contactLng], { icon:customIcon }).addTo(this.map);
+          this.marker = L.marker([contactLat, contactLng], { icon:customIcon })
+            .bindPopup(`<b>${element.name}</b><br>`).openPopup()
+            .addTo(this.map);
           this.marker._leaflet_id = element.id;
           console.log(this.marker._leaflet_id);
 
