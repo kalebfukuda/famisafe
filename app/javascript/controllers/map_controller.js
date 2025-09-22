@@ -63,7 +63,7 @@ export default class extends Controller {
           }
 
           this.marker = L.marker([contactLat, contactLng], { icon:customIcon })
-            .bindPopup(`<b>${element.name}</b><br>`).openPopup()
+            .bindPopup(`<b>${element.name}</b><br><p style="font-size:0.5rem">${element.updated.toLocaleString()}</p>`).openPopup()
             .addTo(this.map);
           this.marker._leaflet_id = element.id;
         }
