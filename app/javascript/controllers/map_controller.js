@@ -10,6 +10,7 @@ export default class extends Controller {
     addresses: Array,
     userid: Number,
     viewtype: String,
+    assetpath: String
   }
 
   connect() {
@@ -24,6 +25,7 @@ export default class extends Controller {
     const lat = this.latitudeValue || 0;
     const lng = this.longitudeValue || 0;
     let markerList = null;
+    const hazardList = null;
     this.map = L.map(this.mapTarget).setView([lat, lng], 12);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -45,9 +47,9 @@ export default class extends Controller {
     } else if (this.viewtypeValue === "only-address") {
       markerList = this.addressesValue;
     }
+    this.getHazardData().then((hazards) => {
+      markerList = markerList.concat(hazards);
 
-    //Shows all locations for all places and contacts
-    if(markerList !== null) {
       markerList.forEach(element => {
         if (element.latitude !== null) {
           const contactLat = element.latitude;
@@ -68,7 +70,11 @@ export default class extends Controller {
           this.marker._leaflet_id = element.id;
         }
       });
-    }
+    });
+
+
+
+
     setTimeout(() => this.map.invalidateSize(), 500);
   }
 
@@ -138,6 +144,28 @@ export default class extends Controller {
 
     if(foundMarker) {
       this.map.setView(foundMarker._latlng, 16);
+    }
+  }
+
+  async getHazardData() {
+    try {
+      const res = await fetch("https://api.p2pquake.net/v2/jma/quake");
+      const data = await res.json();
+
+      const hazardList = data.map(element => ({
+        id: element.id,
+        latitude: element.earthquake.hypocenter?.latitude ?? null,
+        longitude: element.earthquake.hypocenter?.longitude ?? null,
+        avatar_url: this.assetpathValue,
+        name: `Earthquake: ${element.earthquake.hypocenter?.name ?? "Unknown"} (M${element.earthquake.hypocenter?.magnitude ?? "?"})`,
+        updated: element.time   // use `time` instead of created_at
+      }));
+
+      return hazardList;
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while getting earthquake info.");
+      return [];
     }
   }
 }

@@ -4,7 +4,8 @@
     data-map-longitude-value="<%= current_user.contact.longitude %>"
     data-map-contacts-value='<%= (current_user.contacts.map { |c| { id: "contact_#{c.id}", latitude: c.latitude, longitude: c.longitude, avatar_url: asset_path("icons/avatars/#{c.avatar}"), name: c.name, updated: c.updated_at.strftime("%Y-%m-%d %H:%M:%S") } }).to_json %>'
     data-map-addresses-value='<%= (current_user.addresses.distinct.map { |a| { id: "address_#{a.id}", latitude: a.latitude, longitude: a.longitude, avatar_url: asset_path("icons/places/#{a.type_place.avatar}"), name: a.description, updated: a.updated_at.strftime("%Y-%m-%d %H:%M:%S") } }).to_json %>'
-    data-map-userid-value='<%= current_user.contact.id %>'>
+    data-map-userid-value='<%= current_user.contact.id %>'
+    data-map-assetpath-value='<%= asset_path("icons/earthquake.png") %>'>
   <h1>All safe?</h1>
   <div id="map" class="map-responsive" style="width: 100%;" data-map-target="map"
     data-action="location:changed->map#updateLocation"

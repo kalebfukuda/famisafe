@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :addresses, only: [:new, :create, :index, :show] do
     get :reverse_geocode, on: :collection
   end
+
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
