@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_23_101744) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_25_010503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_23_101744) do
     t.float "latitude"
     t.float "longitude"
     t.index ["type_place_id"], name: "index_addresses_on_type_place_id"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string "title"
+    t.bigint "users_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["users_id"], name: "index_chats_on_users_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -69,6 +77,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_23_101744) do
     t.datetime "updated_at", null: false
     t.index ["address_id"], name: "index_list_addresses_on_address_id"
     t.index ["contact_id"], name: "index_list_addresses_on_contact_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.bigint "chats_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chats_id"], name: "index_messages_on_chats_id"
   end
 
   create_table "type_places", force: :cascade do |t|

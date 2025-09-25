@@ -11,4 +11,5 @@ class User < ApplicationRecord
 
   # Todos os endereços dos contatos da família
   has_many :addresses, through: :contacts
+  has_many :chats, dependent: :destroy
 end
