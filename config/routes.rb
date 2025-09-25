@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     get :reverse_geocode, on: :collection
   end
 
-
+  resources :chats, only: [:show, :index, :create] do
+    resources :messages, only: [:create, :index]
+  end
   # Defines the root path route ("/")
   # root "posts#index"
 end

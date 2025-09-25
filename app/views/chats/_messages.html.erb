@@ -1,0 +1,27 @@
+<% if messages.present? %>
+  <div class="d-flex flex-column">
+    <% messages.each do |msg| %>
+      <div class="w-75 rounded-4 p-2 mb-3
+        <%= msg.role == "AI" ? "ms-auto bg-secondary" : "bg-primary" %>">
+        <p class="fw-bold mb-0"><%= msg.role %></p>
+        <p><%= msg.content %></p>
+        <p style="font-size:0.5rem;" class="text-end mb-0">
+          <%= msg.created_at.strftime("%F %H:%M:%S") %>
+        </p>
+      </div>
+    <% end %>
+    <!-- Form de envio de mensagem -->
+    <%= simple_form_for([@chat, @message], html: { id: "message_form" }, data: { turbo: true }) do |f| %>
+      <div class="input-group mb-3">
+        <%= f.text_area :content,
+              class: "form-control flex-grow-1",
+              rows: 1,
+              placeholder: "Type a message..." %>
+        <%= f.hidden_field :role, value: "User" %>
+        <button class="btn btn-primary" type="submit">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
+<% end %>

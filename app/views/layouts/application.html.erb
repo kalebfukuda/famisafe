@@ -14,6 +14,7 @@
   <body>
     <% unless devise_controller?  %>
       <%= render "shared/bottomMenu" %>
+      <%= render "shared/chatOffcanvas" %>
     <% end %>
     <%= yield %>
   </body>

@@ -33,10 +33,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_25_010503) do
 
   create_table "chats", force: :cascade do |t|
     t.string "title"
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_chats_on_users_id"
+    t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -81,10 +81,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_25_010503) do
 
   create_table "messages", force: :cascade do |t|
     t.string "content"
-    t.bigint "chats_id", null: false
+    t.string "role"
+    t.bigint "chat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chats_id"], name: "index_messages_on_chats_id"
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 
   create_table "type_places", force: :cascade do |t|

@@ -1,0 +1,28 @@
+<div class="offcanvas offcanvas-start bg-cBlack text-bg-dark"
+  tabindex="-1"
+  id="offcanvasAi"
+  aria-labelledby="offcanvasAiLabel"
+  data-controller="chat">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasAiLabel">AI Chat</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <div data-chat-target="divchats">
+        <%= render "chats/list", chats: current_user.chats %>
+      </div>
+      <div class="d-none" data-chat-target="divmsgs">
+        <h1>messages</h1>
+        <%= link_to "",
+              data: { action: "click->chat#showChats" },
+              class: "nav-link text-center" do %>
+          <i class="fa-solid fa-robot"></i>
+        <% end %>
+        <div id="messages_container" data-chat-target="msgcontainer">
+          <%= render "chats/messages", messages: @messages %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
