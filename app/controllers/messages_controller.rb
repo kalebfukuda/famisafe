@@ -13,8 +13,10 @@ class MessagesController < ApplicationController
     @message = @chat.messages.build(params_messages)
 
     if @message.save
+      @messages = @chat.messages.order(created_at: :asc)
+      @message = Message.new
       respond_to do |format|
-        format.turbo_stream # renderiza automaticamente create.turbo_stream.erb
+        format.turbo_stream
         format.html { redirect_to @chat }
       end
     else
