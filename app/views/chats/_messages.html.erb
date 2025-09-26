@@ -1,15 +1,17 @@
 <% if messages.present? %>
   <div class="d-flex flex-column">
-    <% messages.each do |msg| %>
-      <div class="w-75 rounded-4 p-2 mb-3
-        <%= msg.role == "AI" ? "ms-auto bg-secondary" : "bg-primary" %>">
-        <p class="fw-bold mb-0"><%= msg.role %></p>
-        <p><%= msg.content %></p>
-        <p style="font-size:0.5rem;" class="text-end mb-0">
-          <%= msg.created_at.strftime("%F %H:%M:%S") %>
-        </p>
-      </div>
-    <% end %>
+    <div class="overflow-y-auto" style="max-height:40rem;">
+      <% messages.each do |msg| %>
+        <div class="w-75 rounded-4 p-2 mb-3
+        <%= msg.role == "AI" ? "bg-secondary" : "ms-auto  bg-primary" %>">
+          <p class="fw-bold mb-0"><%= msg.role %></p>
+          <p><%= msg.content %></p>
+          <p style="font-size:0.5rem;" class="text-end mb-0">
+            <%= msg.created_at.strftime("%F %H:%M:%S") %>
+          </p>
+        </div>
+      <% end %>
+    </div>
     <!-- Form de envio de mensagem -->
     <%= simple_form_for([@chat, @message], html: { id: "message_form" }, data: { turbo: true }) do |f| %>
       <div class="input-group mb-3">

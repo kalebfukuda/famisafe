@@ -13,11 +13,10 @@
         <%= render "chats/list", chats: current_user.chats %>
       </div>
       <div class="d-none" data-chat-target="divmsgs">
-        <h1>messages</h1>
         <%= link_to "",
               data: { action: "click->chat#showChats" },
-              class: "nav-link text-center" do %>
-          <i class="fa-solid fa-robot"></i>
+              class: "nav-link mb-3" do %>
+          <i class="fa-solid fa-arrow-left"></i>
         <% end %>
         <div id="messages_container" data-chat-target="msgcontainer">
           <%= render "chats/messages", messages: @messages %>
