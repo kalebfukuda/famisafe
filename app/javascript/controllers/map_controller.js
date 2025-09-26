@@ -28,6 +28,58 @@ export default class extends Controller {
     const hazardList = null;
     this.map = L.map(this.mapTarget).setView([lat, lng], 12);
 
+    var tsunamiGeoJSON ={
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Approximate coastal impact — M8.0 near Tokyo Bay",
+        "description": "Coarse illustrative polygon around Tokyo Bay lowlands. NOT a scientific hazard or inundation map.",
+        "assumptions": "Epicenter near Tokyo Bay; polygon approximates low-lying coastal corridor (illustrative only). Use DEM+hydrodynamic modelling for real results."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [139.6500, 35.2500],
+            [139.6000, 35.4000],
+            [139.6200, 35.5200],
+            [139.6600, 35.6000],
+            [139.7200, 35.6800],
+            [139.8500, 35.7000],
+            [140.0000, 35.6800],
+            [140.0700, 35.6300],
+            [140.0700, 35.5000],
+            [139.9500, 35.4000],
+            [139.8500, 35.3300],
+            [139.7500, 35.2800],
+            [139.6500, 35.2500]
+          ]
+        ]
+      }
+    }
+  ]
+};
+
+     L.geoJSON(tsunamiGeoJSON, {
+      style: {
+        color: "blue",
+        weight: 2,
+        fillColor: "red",
+        fillOpacity: 0.4
+      },
+      onEachFeature: function (feature, layer) {
+        // Add popup with properties
+        if (feature.properties && feature.properties.name) {
+          layer.bindPopup(
+            "<b>" + feature.properties.name + "</b><br>" +
+            feature.properties.description
+          );
+        }
+      }
+    }).addTo(this.map);
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors",
       maxZoom: 19

@@ -1,6 +1,6 @@
 <% if messages.present? %>
-  <div class="d-flex flex-column">
-    <div class="overflow-y-auto" style="max-height:40rem;">
+  <div class="d-flex flex-column p-2">
+    <div class="overflow-y-auto mb-2 px-1" style="max-height:40rem;">
       <% messages.each do |msg| %>
         <div class="w-75 rounded-4 p-2 mb-3
         <%= msg.role == "AI" ? "bg-secondary" : "ms-auto  bg-primary" %>">
